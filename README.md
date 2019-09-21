@@ -29,32 +29,11 @@ For a given set of stimulation patterns, spikes could be generated from the reco
 # Object corresponding to ground-truth retina.
 import system_actual
 
-# Option 1 - randomly sample spike spikes based on a ground-truth dictionary.
-retina = system_actual.PerfectlyObservedRetina(dictionary[:, :38, :], np.squeeze(cellID_list))
-
-<!--
-# Option 2 - sample spikes from output of electrical spike sorting applied on an experimental recording.
-ei_src = '/Volumes/Analysis/2015-11-09-3/data000/data000_ei_nps.mat'
-elec_coords_loc = '/Volumes/Lab/Users/AlexG/pystim/files/elec-coords/512Coords.mat'
-art_basis = '/Volumes/Lab/Users/bhaishahster/GITs/matlab/private/nishal/Prosthesis/pipeline/notebooks/basis.mat'
-preprocessed_data = '/Volumes/Analysis/2015-11-09-3/data001-data002'
-retina = system_actual.SampleRealRetina(preprocessed_data, 
-                                        ei_src, elec_coords_loc, 
-                                        art_basis, 
-                                        cids_use=np.squeeze(cellID_list))
--->
-```
-
-Note that the `SampleRealRetina` object implements a novel spike sorting method that exploits an artifact basis learnt from previous experiments. If you want to just run spike sorting, you can declare the `retina` object as outlined above in option 2 and run the following steps:  
-
-```python 
-# How to run electrical spike sorting.
-n_elecs = 512
-n_amps = 38
-n_trials = 25
-trial_elec_amps = np.ones((n_elecs, n_amps)) * n_trials  # choose number of trials to spike sort for each electrode and amplitude
-spks_coll = retina.stimulate(trial_elec_amps.astype(np.int32))  # run spike sorting. 
-
+# randomly sample spike spikes based on a ground-truth dictionary.
+data = sio.loadmat('./data/simulation_data.mat');
+dictionary = data['simulated_probability'][:, :38, :]
+cellID_list = data['cellID_list']
+retina = system_actual.PerfectlyObservedRetina(dictionary, cellID_list)
 ```
 
 ### Model retina
@@ -69,8 +48,8 @@ import system_model
 system_model_obj = system_model.Model(retina.cids)
 
 # Option 2 - Joint model across multiple electrode-cell pairs.
-ei, ei_cids = ss_util.get_ei_data(ei_src)
-xy_priors = ss_util.get_xy_priors(ei_xy_prior_src)
+ei, ei_cids = ss_util.get_ei_data('./data/ei.mat')
+xy_priors = ss_util.get_xy_priors('./data/ei-erf-across-retinas.pkl')
 system_model_obj = system_model.Hierarchical2(ei, retina.cids, 
                                               use_prior=True, vi_global=True,
                                               xy_priors=xy_priors)
@@ -103,7 +82,7 @@ To compare the estimated response probabilities with the ground truth, we use a 
 ```python 
 ## Set-up the metrics object that keeps track of calibration performance.
 import metrics
-metrics_obj = metrics.Metrics(dictionary[:, :38, :], np.squeeze(cellID_list))  # first arg is supposed be the target.
+metrics_obj = metrics.Metrics(dictionary, np.squeeze(cellID_list))  # first arg is supposed be the target.
 ```
 
 ### Experiment
