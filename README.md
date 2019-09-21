@@ -32,6 +32,7 @@ import system_actual
 # Option 1 - randomly sample spike spikes based on a ground-truth dictionary.
 retina = system_actual.PerfectlyObservedRetina(dictionary[:, :38, :], np.squeeze(cellID_list))
 
+<!--
 # Option 2 - sample spikes from output of electrical spike sorting applied on an experimental recording.
 ei_src = '/Volumes/Analysis/2015-11-09-3/data000/data000_ei_nps.mat'
 elec_coords_loc = '/Volumes/Lab/Users/AlexG/pystim/files/elec-coords/512Coords.mat'
@@ -41,7 +42,7 @@ retina = system_actual.SampleRealRetina(preprocessed_data,
                                         ei_src, elec_coords_loc, 
                                         art_basis, 
                                         cids_use=np.squeeze(cellID_list))
-
+-->
 ```
 
 Note that the `SampleRealRetina` object implements a novel spike sorting method that exploits an artifact basis learnt from previous experiments. If you want to just run spike sorting, you can declare the `retina` object as outlined above in option 2 and run the following steps:  
