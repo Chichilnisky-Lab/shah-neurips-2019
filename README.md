@@ -1,7 +1,7 @@
 # Algorithms for efficient calibration of electrically evoked responses
 
 ## Overview
-For efficient closed loop electrical response calibration, different steps must be repeated interatively - ![flow](doc/flow.png)
+For efficient closed loop electrical response calibration, different steps must be repeated interatively - ![flow](docs/flow.png)
 
 Different modules for the three components are included in different modules: 
 * The ground-truth retina gives spikes for different stimulation patterns (`system_actual.py`).
@@ -12,7 +12,7 @@ Additionally, different modules are provided for analyses :
 * Simulating a closed loop experiment (`adaptive_experiment.py`)
 * Metrics to keep track of performance (`metrics.py`)
 
-For more details on different components and analyses, see this [report](doc/report.pdf).
+For more details on different components and analyses, see this [report](docs/report.pdf).
 
 ## How to use the code
 
