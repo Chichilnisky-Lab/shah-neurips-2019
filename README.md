@@ -84,6 +84,7 @@ To compare the estimated response probabilities with the ground truth, we use a 
 ```python 
 ## Set-up the metrics object that keeps track of calibration performance.
 import metrics
+import numpy as np
 metrics_obj = metrics.Metrics(dictionary, np.squeeze(cellID_list))  # first arg is supposed be the target.
 ```
 
