@@ -44,6 +44,7 @@ For a given set of recorded spikes, the response probabilities for each tuple of
 ```python
 ## Object corresponding to inferred retina based on measurements.
 import system_model
+import spike_sort_util as ss_util
 
 # Option 1 - independent electrode-cells.
 system_model_obj = system_model.Model(retina.cids)
