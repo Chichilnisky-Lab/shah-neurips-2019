@@ -31,7 +31,7 @@ import system_actual
 import scipy.io as sio
 
 # randomly sample spike spikes based on a ground-truth dictionary.
-data = sio.loadmat('./data/simulated_data.mat');
+data = sio.loadmat('../data/simulated_data.mat');
 dictionary = data['simulated_probability'][:, :38, :]
 cellID_list = data['cellID_list']
 retina = system_actual.PerfectlyObservedRetina(dictionary, cellID_list)
@@ -49,8 +49,8 @@ import system_model
 system_model_obj = system_model.Model(retina.cids)
 
 # Option 2 - Joint model across multiple electrode-cell pairs.
-ei, ei_cids = ss_util.get_ei_data('./data/ei.mat')
-xy_priors = ss_util.get_xy_priors('./data/ei-erf-across-retinas.pkl')
+ei, ei_cids = ss_util.get_ei_data('../data/ei.mat')
+xy_priors = ss_util.get_xy_priors('../data/ei-erf-across-retinas.pkl')
 system_model_obj = system_model.Hierarchical2(ei, retina.cids, 
                                               use_prior=True, vi_global=True,
                                               xy_priors=xy_priors)
