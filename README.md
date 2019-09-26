@@ -44,6 +44,7 @@ For a given set of recorded spikes, the response probabilities for each tuple of
 ```python
 ## Object corresponding to inferred retina based on measurements.
 import system_model
+import spike_sort_util as ss_util
 
 # Option 1 - independent electrode-cells.
 system_model_obj = system_model.Model(retina.cids)
@@ -83,6 +84,7 @@ To compare the estimated response probabilities with the ground truth, we use a 
 ```python 
 ## Set-up the metrics object that keeps track of calibration performance.
 import metrics
+import numpy as np
 metrics_obj = metrics.Metrics(dictionary, np.squeeze(cellID_list))  # first arg is supposed be the target.
 ```
 
