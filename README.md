@@ -28,9 +28,10 @@ For a given set of stimulation patterns, spikes could be generated from the reco
 
 # Object corresponding to ground-truth retina.
 import system_actual
+import scipy.sio as sio
 
 # randomly sample spike spikes based on a ground-truth dictionary.
-data = sio.loadmat('./data/simulation_data.mat');
+data = sio.loadmat('./data/simulated_data.mat');
 dictionary = data['simulated_probability'][:, :38, :]
 cellID_list = data['cellID_list']
 retina = system_actual.PerfectlyObservedRetina(dictionary, cellID_list)
